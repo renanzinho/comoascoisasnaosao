@@ -9,7 +9,6 @@ class Forniture {
     this.rotation = rotation
     this.over = false
     this.name = name
-    this.p
   }
 
   display() {
@@ -103,7 +102,7 @@ class StartButton {
       getAudioContext().resume()
       streetSound.loop()
     })
-    btn.position(300, 457/2-50)
+    btn.position(cnvx+canvasWidth/2 - 30, cnvy+canvasHeight/2)
     pop()
   }
 }
@@ -125,7 +124,9 @@ class Sofa {
     iframe.attribute('frameborder', '0')
     iframe.attribute('allow', 'autoplay')
     player.child(iframe)
-    wrapper.position(canvasWidth/2-760/2, canvasHeight/2 - 428/2 - 5)
+    // wrapper.position(cnvx, cnvy)
+    wrapper.style('zIndex', '10')
+    wrapper.position(cnvx + canvasWidth/2 - 760/2, cnvy + canvasHeight/2 - 420/2)
     wrapper.removeAttribute('hidden')
 
     pop()
@@ -154,10 +155,12 @@ const States = {
   sofa: 'sofa',
 }
 
-let state = States.main
+let state = States.start
 let uiItems = []
 
 let fan, tv, wind, sofa, sofaState
+let cnvx, cnvy, cnv
+let title
 
 /////////// Canvas
 function setup() {
@@ -166,8 +169,12 @@ function setup() {
   wind = new Forniture(252, 28, 99, 93, 0, windowImg, "janela")
   sofa = new Forniture(230, 230, 243, 116, 8, sofaImg, "sofa")
   sofaState = new Sofa()
+  title = new Title()
 
-  createCanvas(800, 457)
+  cnv = createCanvas(800, 457)
+  cnvx = (windowWidth - width) / 2;
+  cnvy = (windowHeight - height) / 2;
+  cnv.position(cnvx, cnvy);
   frameRate(60)
   angleMode(DEGREES)
   outputVolume(0.8)
@@ -177,7 +184,7 @@ function draw() {
   background(255)
   image(frameImg, 0, 0, 800, 457, 0, 0, frameImg.width, frameImg.height, CONTAIN, CENTER)
   removeElements()
-  uiItems = []
+  uiItems = [title]
   
   switch (state) {
     case States.start:
@@ -199,8 +206,29 @@ function draw() {
   }
 }
 
+class Title {
+  display() {
+    let title = createP("como as coisas não são")
+    title.style('font-size', '50px')
+    title.style('color', '#8A9085')
+    title.style('font-family', 'Karla')
+    title.position(cnvx - 120, cnvy - 120)
+  }
+}
+
+
 function mousePressed() {
   uiItems.forEach(function(ele) {
     ele.pressed()
   })
+}
+
+function windowResized() {
+  centerCanvas()
+}
+
+function centerCanvas() {
+  cnvx = (windowWidth - width) / 2;
+  cnvy = (windowHeight - height) / 2;
+  cnv.position(cnvx, cnvy);
 }

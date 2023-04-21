@@ -18,14 +18,14 @@ canvas {
 
 #div-to-crop {
   overflow: hidden;
-  margin-top: -51%;
+  margin-top: -52%;
   margin-bottom: -20%;
 }
 
 #player-wrapper {
   position: relative;
   overflow: hidden;
-  padding-top: 128.25%;
+  padding-top: 127%;
 }
 #player {
   position: absolute;
